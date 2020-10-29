@@ -1,16 +1,57 @@
 import bclasses from "./bclasses"
+import * as cheerio from "cheerio"
+import * as fs from "fs"
+import * as open from "open"
 
-export async function main() {
-    let my_course_list1 = ["COMPSCI 186", "COMPSCI 188", "COMPSCI 162"]
+const greenlight = "&#128994;"
+const yellowlight = "&#128993;"
+const redlight = "&#128308;"
+const whitelight = "&#9898;"
+
+export function main() {
+    let my_course_list1 = ["COMPSCI 186", "COMPSCI 188"]
     let my_course_list2 = ["COMPSCI 186", "COMPSCI 188", "COMPSCI 162"]
     let semester = "spring"
     let year = "2021"
 
     let list = new bclasses(semester, year, my_course_list1)
-    list.main()
-    list.print_all()
+    let output = html_editor(list)
+    fs.writeFileSync(__dirname + '/../res/output.html', output)
+    open(__dirname + '/../res/output.html')
+}
 
-    // new bclasses(semester, year, my_course_list2).main()
+export function html_editor(classes: bclasses) {
+    let htmlPath = __dirname + '/../res/table.html'
+    let $ = cheerio.load(fs.readFileSync(htmlPath, {encoding: 'utf8'}))
+
+    for (const course of Object.entries(classes.my_course_list_info)) {
+        let table_row = ""
+        if (!course[1].is_offered) {
+            table_row = `<tr>
+                            <td>${whitelight}</td>
+                            <td colspan="6">${course[1].course_title} is not offered in ${classes.semester} ${classes.year}</td>
+                        </tr>`
+        } else {
+            let sign = redlight
+            if (Number(course[1].currently_waitlisted) == 0) {
+                sign = greenlight
+            } else if (Number(course[1].currently_waitlisted) < Number(course[1].max_waitlisted)) {
+                sign = yellowlight
+            }
+            table_row = `<tr>
+                            <td>${sign}</td>
+                            <td>${course[1].course_subtitle}</td>
+                            <td>${course[1].course_title}</td>
+                            <td>${course[1].currently_enrolled} / ${course[1].max_enrolled}</td>
+                            <td>${course[1].currently_waitlisted} / ${course[1].max_waitlisted}</td>
+                            <td>${course[1].total_class_grade}</td>
+                            <td>${course[1].recent_section_grade} (${course[1].recent_section_period})</td>
+                        </tr>`
+
+        }
+        $(table_row).appendTo($('#body'))
+    }
+    return $.html()
 }
 
 main()

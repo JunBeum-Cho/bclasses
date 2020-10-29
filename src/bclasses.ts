@@ -25,6 +25,7 @@ export default class bclasses {
         this.semester = semester
         this.year = year
         this.my_course_list = my_course_list
+        this.main()
     }
 
     async main () {
