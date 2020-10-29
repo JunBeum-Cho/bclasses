@@ -35,7 +35,8 @@ export default class bclasses {
             ].join(" ")).toString())["courses"]
 
         for (let course of this.all_course_list) {
-            if(this.my_course_list.includes(`${course["abbreviation"]} ${course["course_number"]}`)) {
+            this.my_course_list = this.my_course_list.map(function(course) { return course.replace(" ", "") })
+            if(this.my_course_list.includes(`${course["abbreviation"]} ${course["course_number"]}`.replace(" ", ""))) {
                 this.my_course_list_ID.push([course["id"], `${course["abbreviation"]} ${course["course_number"]}`])
             }
         }
