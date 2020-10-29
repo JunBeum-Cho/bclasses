@@ -9,13 +9,14 @@ const redlight = "&#128308;"
 const whitelight = "&#9898;"
 
 export function main() {
-    let my_course_list1 = ["COMPSCI 186", "COMPSCI 188"]
-    let my_course_list2 = ["COMPSCI 186", "COMPSCI 188", "COMPSCI 162"]
+    let major_classes = ["COMPSCI 186", "COMPSCI 188"]
+    let other_classes = ["COMPSCI 186", "COMPSCI 188", "COMPSCI 162"]
     let semester = "spring"
     let year = "2021"
 
-    let list = new bclasses(semester, year, my_course_list1)
-    let output = html_editor(list)
+    let major_classes_list = new bclasses(semester, year, major_classes)
+    let other_classes_list;
+    let output = html_editor(major_classes_list)
     fs.writeFileSync(__dirname + '/../res/output.html', output)
     open(__dirname + '/../res/output.html')
 }
