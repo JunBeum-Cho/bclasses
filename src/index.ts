@@ -5,12 +5,14 @@ import * as open from "open"
 import { html_editor } from "./utils"
 
 export async function main() {
+    // import my classes list from config.json
     let my_total_classes: { list_name: string, course: bclasses }[] = []
     const configJSON = require("../config.json")
     const semester = configJSON["semester"]
     const year = configJSON["year"]
     const course_list = configJSON["course_list"]
 
+    // request data and compute (for each list)
     Object.entries(course_list).map(async (list_info) => {
         let list_name = list_info[0] as string
         let course_list = list_info[1] as string[]
@@ -19,6 +21,7 @@ export async function main() {
         await bclass.main()
     })
 
+    // using the response, creatae a html file
     let output = html_editor(my_total_classes)
     fs.writeFileSync(__dirname + '/../res/output.html', output)
     open(__dirname + '/../res/output.html')
