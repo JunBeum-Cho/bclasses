@@ -39,7 +39,7 @@ export function html_editor(classes_list: { list_name: string, course: bclasses 
             if (!course[1].is_offered) { 
                 table_row_html = `<tr>
                                 <td>${whitelight}</td>
-                                <td colspan="6">${course[1].course_title} is not offered in ${classes.semester} ${classes.year}</td>
+                                <td class="italic" colspan="6"> * ${course[1].course_title} is not offered in ${classes.semester} ${classes.year}</td>
                             </tr>`
             } else {
                 let sign = redlight
@@ -51,7 +51,7 @@ export function html_editor(classes_list: { list_name: string, course: bclasses 
                 table_row_html = `<tr>
                                 <td>${sign}</td>
                                 <td>${course[1].course_title}</td>
-                                <td>${course[1].course_subtitle}</td>
+                                <td class="course-title">${course[1].course_subtitle}</td>
                                 <td>${course[1].currently_enrolled} / ${course[1].max_enrolled}</td>
                                 <td>${course[1].currently_waitlisted} / ${course[1].max_waitlisted}</td>
                                 <td>${course[1].total_class_grade}</td>
@@ -60,7 +60,6 @@ export function html_editor(classes_list: { list_name: string, course: bclasses 
 
             }
             $(table_row_html).appendTo($(`#${classes_title_nospace}_body`))
-            // $(classes_title).append(table_row_html)
         }
     }
     return $.html()

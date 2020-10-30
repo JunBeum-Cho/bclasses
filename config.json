@@ -1,0 +1,9 @@
+{
+    "year": "2021",
+    "semester": "spring",
+    "course_list": {
+        "Major Classes" : ["MATH 54", "IND ENG 142", "DATA 100", "ENGIN 120", "IND ENG 115"],
+        "Other Claases" : ["COMPSCI W186", "KOREAN 105", "AFRICAM 134", "HISTORY 182A"],
+        "Breadth Classes" : ["MATH1A", "MATH1B"]
+    }
+}
