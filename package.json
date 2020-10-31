@@ -4,7 +4,8 @@
   "description": "BerkeleyClasses",
   "license": "MIT",
   "scripts": {
-    "start": "npx ts-node ./src/index.ts"
+    "start": "npx ts-node ./src/index.ts",
+    "output": "open ./res/output.html"
   },
   "dependencies": {
     "@types/cheerio": "^0.22.22",

@@ -25,20 +25,23 @@ export default class bclasses {
         this.semester = semester
         this.year = year
         this.my_course_list = my_course_list
-        this.all_course_list = all_course_list.map(function(course) { return course.replace(" ", "").toLowerCase()})
+        this.all_course_list = all_course_list
+        
     }
 
     async main () {
         for (let course of this.my_course_list) {
-            if(this.all_course_list.includes(course.replace(" ", "").toLowerCase())) {
-                this.my_course_list_ID.push([course["id"], `${course["abbreviation"]} ${course["course_number"]}`])
+            let id = this.checkifexists(course)
+            if(id) {
+                this.my_course_list_ID.push([id, `${course.toUpperCase()}`])
             } else {
-                this.my_course_list_info[course["id"]] = {}
-                this.my_course_list_info[course["id"]].course_validation = false
-                this.my_course_list_info[course["id"]].course_title = `${course["abbreviation"]} ${course["course_number"]}`
+                // in case there are two invalid courses, used course title instead of id 
+                this.my_course_list_info[course] = {}
+                this.my_course_list_info[course].course_validation = false
+                this.my_course_list_info[course].course_title = `${course.toUpperCase()}`
             }
         }
-        console.log(this.my_course_list_info)
+
         for (let courseID of this.my_course_list_ID) {
             this.get_enroll_info(courseID[0], courseID[1])
             this.get_gradenumber_info(courseID[0])
@@ -91,8 +94,8 @@ export default class bclasses {
                 `-H "accept: application/json"`
                 ].join(" ")).toString())
             
-            this.my_course_list_info[courseID].total_class_grade = course_grade_info["course_gpa"]
-            this.my_course_list_info[courseID].recent_section_grade = course_grade_info["section_gpa"]
+            this.my_course_list_info[courseID].total_class_grade = course_grade_info["course_gpa"] || "N/A"
+            this.my_course_list_info[courseID].recent_section_grade = course_grade_info["section_gpa"] || "N/A"
         } catch {
             this.my_course_list_info[courseID].total_class_grade = "N/A"
             this.my_course_list_info[courseID].recent_section_grade = "N/A"
@@ -107,5 +110,15 @@ export default class bclasses {
                 console.log(course[1])
             }
         }
+    }
+
+    public checkifexists(classname: string) {
+        for (let course of this.all_course_list) {
+            // Typescript does not provide replaceAll(), so used regex
+            if(`${course["abbreviation"]}${course["course_number"]}`.replace(/ /g, "").toLowerCase() === classname.replace(/ /g, "").toLowerCase()) {
+                return course["id"]
+            }
+        }
+        return 0
     }
 }
