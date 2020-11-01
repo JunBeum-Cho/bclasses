@@ -1,5 +1,6 @@
 import * as fs from "fs"
 import * as cp from "child_process"
+import Axios from "axios"
 export default class bclasses {
     public semester: string
     public year: string
@@ -43,19 +44,22 @@ export default class bclasses {
         }
 
         for (let courseID of this.my_course_list_ID) {
-            this.get_enroll_info(courseID[0], courseID[1])
-            this.get_gradenumber_info(courseID[0])
-            this.get_grade_info(courseID[0])
+            await this.get_enroll_info(courseID[0], courseID[1])
+            await this.get_gradenumber_info(courseID[0])
+            await this.get_grade_info(courseID[0])
         }
     }
 
-    private get_enroll_info(courseID: string, course_name: string) {
+    private async get_enroll_info(courseID: string, course_name: string) {
         this.my_course_list_info[courseID] = {}
         try {
-            const course_enroll_info = JSON.parse(cp.execSync([
-                `curl -X GET "https://www.berkeleytime.com/api/enrollment/aggregate/${courseID}/${this.semester}/${this.year}/"`,
-                `-H "accept: application/json"`
-                ].join(" ")).toString())
+            // const course_enroll_info = JSON.parse(cp.execSync([
+            //     `curl -X GET "https://www.berkeleytime.com/api/enrollment/aggregate/${courseID}/${this.semester}/${this.year}/"`,
+            //     `-H "accept: application/json"`
+            //     ].join(" ")).toString())
+
+            const course_enroll_info_res = await Axios.get(`https://www.berkeleytime.com/api/enrollment/aggregate/${courseID}/${this.semester}/${this.year}/`)
+            const course_enroll_info = await course_enroll_info_res.data
             this.my_course_list_info[courseID].course_validation = true
             this.my_course_list_info[courseID].is_offered = true
             this.my_course_list_info[courseID].course_title = course_enroll_info["title"]
@@ -71,12 +75,15 @@ export default class bclasses {
         }
     }
 
-    private get_gradenumber_info(courseID: string) {
+    private async get_gradenumber_info(courseID: string) {
         try {
-            const course_gradenumber_info = JSON.parse(cp.execSync([
-                `curl -X GET curl -X GET "https://www.berkeleytime.com/api/grades/course_grades/${courseID}/"`,
-                `-H "accept: application/json"`
-                ].join(" ")).toString())
+            // const course_gradenumber_info = JSON.parse(cp.execSync([
+            //     `curl -X GET curl -X GET "https://www.berkeleytime.com/api/grades/course_grades/${courseID}/"`,
+            //     `-H "accept: application/json"`
+            //     ].join(" ")).toString())
+
+            const course_gradenumber_info_res = await Axios.get(`https://www.berkeleytime.com/api/grades/course_grades/${courseID}/`)
+            const course_gradenumber_info = await course_gradenumber_info_res.data
 
             let recent_section = course_gradenumber_info[0]
             this.my_course_list_info[courseID].recent_section_id = recent_section["grade_id"]
@@ -87,12 +94,15 @@ export default class bclasses {
         }
     }
 
-    private get_grade_info(courseID: string) {
+    private async get_grade_info(courseID: string) {
         try {
-            const course_grade_info = JSON.parse(cp.execSync([
-                `curl -X GET curl -X GET "https://www.berkeleytime.com/api/grades/sections/${this.my_course_list_info[courseID].recent_section_id}/"`,
-                `-H "accept: application/json"`
-                ].join(" ")).toString())
+            // const course_grade_info = JSON.parse(cp.execSync([
+            //     `curl -X GET curl -X GET "https://www.berkeleytime.com/api/grades/sections/${this.my_course_list_info[courseID].recent_section_id}/"`,
+            //     `-H "accept: application/json"`
+            //     ].join(" ")).toString())
+            
+            const course_grade_info_res = await Axios.get(`https://www.berkeleytime.com/api/grades/sections/${this.my_course_list_info[courseID].recent_section_id}/`)
+            const course_grade_info = await course_grade_info_res.data
             
             this.my_course_list_info[courseID].total_class_grade = course_grade_info["course_gpa"] || "N/A"
             this.my_course_list_info[courseID].recent_section_grade = course_grade_info["section_gpa"] || "N/A"
