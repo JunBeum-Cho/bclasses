@@ -2,7 +2,7 @@
 
 ### What is Bclasses?
 
-Check out the availability of all your courses and previous grades at a single glance. 
+Bclasses is a UC Berkeley schedule dashboard that allows you to check out the availability of all your courses and previous grades at a single glance.
 With bclasses you can create your own class dashboard.
 
 You can check out the following: `course status`,  `course number`, `course title`, `enrollment info`, `waitlist info`, `accumulated class avg grade`, `most recent section avg grade`
