@@ -43,17 +43,17 @@ export default class bclasses {
             }
         }
 
-        for (let courseID of this.my_course_list_ID) {
-            await this.get_enroll_info(courseID[0], courseID[1])
-            await this.get_gradenumber_info(courseID[0])
-            await this.get_grade_info(courseID[0])
-        }
-
-        // return Promise.all(this.my_course_list_ID.map(async (courseID) => {
+        // for (let courseID of this.my_course_list_ID) {
         //     await this.get_enroll_info(courseID[0], courseID[1])
         //     await this.get_gradenumber_info(courseID[0])
         //     await this.get_grade_info(courseID[0])
-        // }))
+        // }
+
+        return Promise.all(this.my_course_list_ID.map(async (courseID) => {
+            await this.get_enroll_info(courseID[0], courseID[1])
+            await this.get_gradenumber_info(courseID[0])
+            await this.get_grade_info(courseID[0])
+        }))
     }
 
     private async get_enroll_info(courseID: string, course_name: string) {
