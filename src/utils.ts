@@ -15,7 +15,6 @@ export function html_editor(classes_list: { list_name: string, course: bclasses 
         let classes_title = value.list_name
         let classes_title_nospace = classes_title.replace(/ /g, "").toLowerCase()
         let classes = value.course
-        console.log(classes.my_course_list_info)
         let table_html = `
                             <h2 id="${classes_title_nospace}">${classes_title}</h2>
                             <table class="content-table">
