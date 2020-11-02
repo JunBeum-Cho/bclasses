@@ -2,6 +2,9 @@
     "year": "2021",
     "semester": "spring",
     "course_list": {
-        "Breadth Classes" : ["MATH 54", "DATA C100", "IND ENG 142"]
+        "CORE STATISTICS COURSES" : ["Stat 133", "Stat 134", "Stat 135"],
+        "STATISTICS ELECTIVES - Pick three" : ["Stat 102", "Stat 150", "Stat 151A", "Stat 152", "Stat 153", "Stat 154", "Stat 155", "Stat 156", "Stat 157", "Stat 158", "Stat 159"],
+        "CLUSTER COURSES - Pick three" : ["COMPSCI W186", "COMPSCI 169", "COMPSCI 188", "COMPSCI 189", "COMPSCI 170"],
+        "BREADTH courses" : ["HISTORY 182A", "ESPM 50AC"]
     }
 }
