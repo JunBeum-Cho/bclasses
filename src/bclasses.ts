@@ -4,6 +4,7 @@ import Axios from "axios"
 export default class bclasses {
     public semester: string
     public year: string
+    public listname: string
     public my_course_list: string[]
     public all_course_list: string[]
     public my_course_list_ID = []
@@ -22,9 +23,10 @@ export default class bclasses {
         total_class_grade?: string
     }} = {}
 
-    constructor(semester: string, year: string, my_course_list: string[], all_course_list: any) {
+    constructor(semester: string, year: string, listname: string, my_course_list: string[], all_course_list: any) {
         this.semester = semester
         this.year = year
+        this.listname = listname
         this.my_course_list = my_course_list
         this.all_course_list = all_course_list
         

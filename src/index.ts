@@ -10,7 +10,7 @@ import * as chalk from "chalk"
 
 export async function main() {
     // import my classes list from config.json
-    let my_total_classes: { list_name: string, course: bclasses }[] = []
+    let my_total_classes: bclasses[] = []
     const configJSON = require("../config.json")
     const semester = configJSON["semester"]
     const year = configJSON["year"]
@@ -26,15 +26,15 @@ export async function main() {
     const all_course_list = await all_course_list_res.data["courses"]
     // request data and compute (for each list)
     Object.entries(course_list).map((list_info) => {
-        let list_name = list_info[0] as string
+        let listname = list_info[0] as string
         let course_list = list_info[1] as string[]
-        let bclass = new bclasses(semester, year, course_list, all_course_list)
-        my_total_classes.push({list_name: list_name, course: bclass})
+        let bclass = new bclasses(semester, year, listname ,course_list, all_course_list)
+        my_total_classes.push(bclass)
     })
 
     Promise.all(my_total_classes.map(async (bclass)=> {
-        await bclass.course.main()
-        progress.succeed(`${chalk.green(bclass.list_name)} Information Received`)
+        await bclass.main()
+        progress.succeed(`${chalk.green(bclass.listname)} Information Received`)
     })).then(()=> {
         let output = html_editor(my_total_classes)
         fs.writeFileSync(__dirname + '/../res/output.html', output)

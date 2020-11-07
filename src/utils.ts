@@ -8,13 +8,13 @@ const yellowlight = "&#128993;"
 const redlight = "&#128308;"
 const whitelight = "&#9898;"
 
-export function html_editor(classes_list: { list_name: string, course: bclasses }[]) {
+export function html_editor(classes_list: bclasses[]) {
     let htmlPath = __dirname + '/../res/table.html'
     let $ = cheerio.load(fs.readFileSync(htmlPath, {encoding: 'utf8'}))
     for (let value of classes_list) {
-        let classes_title = value.list_name
+        let classes = value
+        let classes_title = value.listname
         let classes_title_nospace = classes_title.replace(/ /g, "").toLowerCase()
-        let classes = value.course
         let table_html = `
                             <h2 id="${classes_title_nospace}">${classes_title}</h2>
                             <table class="content-table">
