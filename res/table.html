@@ -31,6 +31,11 @@
   </body>
 
   <style>
+    .title {
+        font-size: larger;
+        font-family: OpenSans-Regular;
+    }
+    
     .content-table {
       border-collapse: collapse;
       margin: 25px 0;
@@ -38,6 +43,7 @@
       min-width: 1500px;
       border-radius: 5px 5px 0 0;
       overflow: hidden;
+      font-family: Poppins-Regular;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
     }
     
@@ -45,7 +51,8 @@
       background-color: #009879;
       color: #ffffff;
       text-align: left;
-      font-weight: bold;
+      font-family: Poppins-Regular;
+      /* font-weight: bold; */
     }
     
     .content-table th,
@@ -70,6 +77,26 @@
     }
 
     .italic { font-style: italic; }
+
+    @font-face {
+      font-family: Poppins-Regular;
+      src: url('./fonts/poppins/Poppins-Regular.ttf'); 
+    } 
+
+    @font-face {
+      font-family: Poppins-Bold;
+      src: url('./fonts/poppins/Poppins-Bold.ttf'); 
+    }
+
+    @font-face {
+      font-family: OpenSans-Regular;
+      src: url('./fonts/OpenSans/OpenSans-Regular.ttf'); 
+    } 
+
+    @font-face {
+      font-family: OpenSans-Bold;
+      src: url('./fonts/OpenSans/OpenSans-Bold.ttf'); 
+    }
   </style>
 </html>
 

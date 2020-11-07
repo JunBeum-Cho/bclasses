@@ -16,7 +16,7 @@ export function html_editor(classes_list: bclasses[]) {
         let classes_title = value.listname
         let classes_title_nospace = classes_title.replace(/ /g, "").toLowerCase()
         let table_html = `
-                            <h2 id="${classes_title_nospace}">${classes_title}</h2>
+                            <h2 class="title" id="${classes_title_nospace}">${classes_title}</h2>
                             <table class="content-table">
                             <thead id="${classes_title_nospace}_head">
                                 <tr>
