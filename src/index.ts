@@ -18,11 +18,11 @@ export async function main() {
     const progress = ora(`Receiving Class Information ...\n`).start()
     //request all the course info
     // const all_course_list = JSON.parse(cp.execSync([
-    //     `curl -X GET "https://www.berkeleytime.com/api/catalog/catalog_json/?form=long/"`,
+    //     `curl -X GET "https://berkeleytime.com/api/catalog/catalog_json/?form=long/"`,
     //     `-H "accept: application/json"`
     //     ].join(" "), { encoding: 'utf8', maxBuffer: 50 * 1024 * 1024 }).toString())["courses"]
     
-    const all_course_list_res = await Axios.get(`https://www.berkeleytime.com/api/catalog/catalog_json/?form=long/`)
+    const all_course_list_res = await Axios.get(`https://berkeleytime.com/api/catalog/catalog_json/?form=long/`)
     const all_course_list = await all_course_list_res.data["courses"]
     // request data and compute (for each list)
     Object.entries(course_list).map((list_info) => {
