@@ -62,11 +62,11 @@ export default class bclasses {
         this.my_course_list_info[courseID] = {}
         try {
             // const course_enroll_info = JSON.parse(cp.execSync([
-            //     `curl -X GET "https://www.berkeleytime.com/api/enrollment/aggregate/${courseID}/${this.semester}/${this.year}/"`,
+            //     `curl -X GET "https://berkeleytime.com/api/enrollment/aggregate/${courseID}/${this.semester}/${this.year}/"`,
             //     `-H "accept: application/json"`
             //     ].join(" ")).toString())
 
-            const course_enroll_info_res = await Axios.get(`https://www.berkeleytime.com/api/enrollment/aggregate/${courseID}/${this.semester}/${this.year}/`)
+            const course_enroll_info_res = await Axios.get(`https://berkeleytime.com/api/enrollment/aggregate/${courseID}/${this.semester}/${this.year}/`)
             const course_enroll_info = await course_enroll_info_res.data
             this.my_course_list_info[courseID].course_validation = true
             this.my_course_list_info[courseID].is_offered = true
@@ -86,11 +86,11 @@ export default class bclasses {
     private async get_gradenumber_info(courseID: string) {
         try {
             // const course_gradenumber_info = JSON.parse(cp.execSync([
-            //     `curl -X GET curl -X GET "https://www.berkeleytime.com/api/grades/course_grades/${courseID}/"`,
+            //     `curl -X GET curl -X GET "https://berkeleytime.com/api/grades/course_grades/${courseID}/"`,
             //     `-H "accept: application/json"`
             //     ].join(" ")).toString())
 
-            const course_gradenumber_info_res = await Axios.get(`https://www.berkeleytime.com/api/grades/course_grades/${courseID}/`)
+            const course_gradenumber_info_res = await Axios.get(`https://berkeleytime.com/api/grades/course_grades/${courseID}/`)
             const course_gradenumber_info = await course_gradenumber_info_res.data
 
             let recent_section = course_gradenumber_info[0]
@@ -105,11 +105,11 @@ export default class bclasses {
     private async get_grade_info(courseID: string) {
         try {
             // const course_grade_info = JSON.parse(cp.execSync([
-            //     `curl -X GET curl -X GET "https://www.berkeleytime.com/api/grades/sections/${this.my_course_list_info[courseID].recent_section_id}/"`,
+            //     `curl -X GET curl -X GET "https://berkeleytime.com/api/grades/sections/${this.my_course_list_info[courseID].recent_section_id}/"`,
             //     `-H "accept: application/json"`
             //     ].join(" ")).toString())
             
-            const course_grade_info_res = await Axios.get(`https://www.berkeleytime.com/api/grades/sections/${this.my_course_list_info[courseID].recent_section_id}/`)
+            const course_grade_info_res = await Axios.get(`https://berkeleytime.com/api/grades/sections/${this.my_course_list_info[courseID].recent_section_id}/`)
             const course_grade_info = await course_grade_info_res.data
             
             this.my_course_list_info[courseID].total_class_grade = course_grade_info["course_gpa"] || "N/A"
